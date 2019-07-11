@@ -124,6 +124,7 @@
                           sucmsg=" "
                           data-type="*10-1000"
                           nullmsg="请填写评论内容！"
+                          v-model.trim="commentContent"
                         ></textarea>
                         <span class="Validform_checktip"></span>
                       </div>
@@ -134,6 +135,7 @@
                           type="submit"
                           value="提交评论"
                           class="submit"
+                          @click="setCommentContext"
                         />
                         <span class="Validform_checktip"></span>
                       </div>
@@ -151,7 +153,7 @@
                       <div class="inner-box">
                         <div class="info">
                           <span>{{item.user_name}}</span>
-                          <span>{{item.add_time}}</span>
+                          <span>{{item.add_time | formatTime}}</span>
                         </div>
                         <p>{{item.content}}</p>
                       </div>
@@ -201,6 +203,7 @@
 </template>
 
 <script>
+import { log } from "util";
 export default {
   // 商品详情
   name: "detailsGoods",
@@ -227,7 +230,9 @@ export default {
       // 评论当前页数
       pageIndex: 1,
       // 评论每页显示的条数
-      pageSize: 10
+      pageSize: 10,
+      // 用户评论内容
+      commentContent: ""
     };
   },
   created() {
@@ -294,6 +299,17 @@ export default {
     handleCurrentChange(val) {
       this.pageIndex = val;
       this.getComments();
+    },
+    // 提交评论
+    setCommentContext() {
+      this.$axios
+        .post(`site/validate/comment/post/goods/${this.$route.params.id}`, {
+          commenttxt: this.commentContent
+        })
+        .then(() => {
+          this.getComments();
+          this.commentContent = "";
+        });
     }
   },
   watch: {
