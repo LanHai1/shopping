@@ -99,7 +99,7 @@
                 <tr>
                   <th align="right" colspan="8">
                     已选择商品
-                    <b class="red" id="totalQuantity">0</b> 件 &nbsp;&nbsp;&nbsp; 商品总金额（不含运费）：
+                    <b class="red" id="totalQuantity">{{allCount}}</b> 件 &nbsp;&nbsp;&nbsp; 商品总金额（不含运费）：
                     <span class="red">￥</span>
                     <b class="red" id="totalAmount">{{allMoney}}</b>元
                   </th>
@@ -144,12 +144,21 @@ export default {
       });
   },
   computed: {
+    // 所有的钱
     allMoney() {
       let sum = 0;
       this.cartList.forEach(val => {
         sum += val.buycount * val.sell_price;
       });
       return sum;
+    },
+    // 所有的商品数量
+    allCount() {
+      let countSun = 0;
+      this.cartList.forEach(val => {
+        countSun += val.buycount;
+      });
+      return countSun;
     }
   }
 };
