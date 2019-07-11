@@ -302,6 +302,9 @@ export default {
     },
     // 提交评论
     setCommentContext() {
+      if (this.commentContent == "") {
+        return this.commentNot();
+      }
       this.$axios
         .post(`site/validate/comment/post/goods/${this.$route.params.id}`, {
           commenttxt: this.commentContent
@@ -310,6 +313,15 @@ export default {
           this.getComments();
           this.commentContent = "";
         });
+    },
+    // 评论为空警告
+    commentNot() {
+      this.$notify({
+        title: "警告",
+        message: "评论不能为空",
+        type: "warning",
+        duration: 2000
+      });
     }
   },
   watch: {
