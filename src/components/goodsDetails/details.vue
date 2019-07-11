@@ -141,38 +141,33 @@
                   </div>
                   <ul id="commentList" class="list-box">
                     <p
+                      v-if="comments.length==0"
                       style="margin: 5px 0px 15px 69px; line-height: 42px; text-align: center; border: 1px solid rgb(247, 247, 247);"
                     >暂无评论，快来抢沙发吧！</p>
-                    <li>
+                    <li v-for="item in comments" :key="item.id">
                       <div class="avatar-box">
                         <i class="iconfont icon-user-full"></i>
                       </div>
                       <div class="inner-box">
                         <div class="info">
-                          <span>匿名用户</span>
-                          <span>2017/10/23 14:58:59</span>
+                          <span>{{item.user_name}}</span>
+                          <span>{{item.add_time}}</span>
                         </div>
-                        <p>testtesttest</p>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="avatar-box">
-                        <i class="iconfont icon-user-full"></i>
-                      </div>
-                      <div class="inner-box">
-                        <div class="info">
-                          <span>匿名用户</span>
-                          <span>2017/10/23 14:59:36</span>
-                        </div>
-                        <p>很清晰调动单很清晰调动单</p>
+                        <p>{{item.content}}</p>
                       </div>
                     </li>
                   </ul>
                   <div class="page-box" style="margin: 5px 0px 0px 62px;">
-                    <div id="pagination" class="digg">
-                      <span class="disabled">« 上一页</span>
-                      <span class="current">1</span>
-                      <span class="disabled">下一页 »</span>
+                    <div class="block">
+                      <el-pagination
+                        @size-change="handleSizeChange"
+                        @current-change="handleCurrentChange"
+                        :current-page="1"
+                        :page-sizes="[10, 20, 30, 40 ,50 ,100]"
+                        :page-size="10"
+                        layout="total, sizes, prev, pager, next, jumper"
+                        :total="totalcount"
+                      ></el-pagination>
                     </div>
                   </div>
                 </div>
@@ -224,11 +219,22 @@ export default {
       // 选购商品数量
       numGoods: 0,
       // 总库存
-      allGoods: 0
+      allGoods: 0,
+      // 用户评论
+      comments: [],
+      // 评论总页数
+      totalcount: 0,
+      // 评论当前页数
+      pageIndex: 1,
+      // 评论每页显示的条数
+      pageSize: 10
     };
   },
   created() {
+    // 获取商品数据
     this.getData();
+    // 获取评论数据
+    this.getComments();
   },
   methods: {
     // 获取数据
@@ -258,11 +264,43 @@ export default {
     handlerInventoryIncrease() {
       if (this.numGoods > this.allGoods - 1) return;
       this.numGoods++;
+    },
+    // 获取评论
+    getComments() {
+      this.$axios
+        .get(`site/comment/getbypage/goods/${this.$route.params.id}`, {
+          params: {
+            pageIndex: this.pageIndex,
+            pageSize: this.pageSize
+          }
+        })
+        .then(res => {
+          // 用户评论
+          this.comments = res.data.message;
+          // 评论总页数
+          this.totalcount = res.data.totalcount;
+          // 评论当前页数
+          this.pageIndex = res.data.pageIndex;
+          // 评论每页显示的条数
+          this.pageSize = res.data.pageSize;
+        });
+    },
+    // 页码条数改变触发
+    handleSizeChange(val) {
+      this.pageSize = val;
+      this.getComments();
+    },
+    // 当前页改变触发
+    handleCurrentChange(val) {
+      this.pageIndex = val;
+      this.getComments();
     }
   },
   watch: {
+    // 侦听路由的改变
     $route: function() {
       this.getData();
+      this.getComments();
     }
   }
 };

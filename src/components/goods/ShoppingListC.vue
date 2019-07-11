@@ -55,10 +55,12 @@
               <li v-for="(item, index) in toplist" :key="index">
                 <div class="img-box">
                   <label>{{index+1}}</label>
-                  <img :src="item.img_url" />
+                  <a :href="'#/details/'+item.id">
+                    <img :src="item.img_url" />
+                  </a>
                 </div>
                 <div class="txt-box">
-                  <a href="/goods/show-98.html">{{item.title}}</a>
+                  <a :href="'#/details/'+item.id">{{item.title}}</a>
                   <span>{{item.add_time | formatTime}}</span>
                 </div>
               </li>
@@ -71,7 +73,11 @@
       <div class="main-tit">
         <h2>{{item.catetitle}}</h2>
         <p>
-          <a href="#" v-for="(list, index) in item.level2catelist" :key="index">{{list.subcatetitle}}</a>
+          <a
+            href="#"
+            v-for="(list, index) in item.level2catelist"
+            :key="index"
+          >{{list.subcatetitle}}</a>
           <a href="#">
             更多
             <i>+</i>
@@ -84,9 +90,7 @@
             <li v-for="(goods, index) in item.datas" :key="index">
               <a :href="'#/details/'+goods.artID" class>
                 <div class="img-box">
-                  <img
-                    :src="goods.img_url"
-                  />
+                  <img :src="goods.img_url" />
                 </div>
                 <div class="info">
                   <h3>{{goods.artTitle}}</h3>
@@ -136,11 +140,9 @@ export default {
       this.toplist = res.data.message.toplist;
     });
     // 商品首页按照分类分组获取数据
-    this.$axios
-      .get("site/goods/getgoodsgroup")
-      .then(res => {
-        this.classGoods = res.data.message;
-      });
+    this.$axios.get("site/goods/getgoodsgroup").then(res => {
+      this.classGoods = res.data.message;
+    });
   }
 };
 </script>
