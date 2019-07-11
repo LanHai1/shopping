@@ -46,7 +46,7 @@
                             class="el-input-number__decrease"
                             ref="reduce"
                             @click="handlerInventoryReduce($event)"
-                            :class="{'is-disabled':this.numGoods==0?true:false}"
+                            :class="{'is-disabled':this.numGoods<=0?true:false}"
                           >
                             <i class="el-icon-minus"></i>
                           </span>
@@ -262,7 +262,7 @@ export default {
     // 库存操作
     // 减
     handlerInventoryReduce() {
-      if (this.numGoods == 0) return;
+      if (this.numGoods <= 0) return;
       this.numGoods--;
     },
     // 增
