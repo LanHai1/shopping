@@ -23,8 +23,14 @@ Vue.use(ElementUi);
 
 // 商品列表
 import goods from "./components/goods/ShoppingListC.vue";
+// 商品详情
+import details from "./components/goodsDetails/details.vue";
 // 创建路由规则
 const routes = [
+  {
+    path: "/details/:id",
+    component: details
+  },
   {
     path: "/goods",
     component: goods
