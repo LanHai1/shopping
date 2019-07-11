@@ -15,23 +15,23 @@
             <div class="goods-box clearfix">
               <div class="pic-box"></div>
               <div class="goods-spec">
-                <h1>华为（HUAWEI）荣耀6Plus 16G双4G版</h1>
-                <p class="subtitle">双800万摄像头，八核，安卓智能手机）荣耀6plus</p>
+                <h1>{{goodsinfo.title}}</h1>
+                <p class="subtitle">{{goodsinfo.sub_title}}</p>
                 <div class="spec-box">
                   <dl>
                     <dt>货号</dt>
-                    <dd id="commodityGoodsNo">SD9102356032</dd>
+                    <dd id="commodityGoodsNo">{{goodsinfo.goods_no}}</dd>
                   </dl>
                   <dl>
                     <dt>市场价</dt>
                     <dd>
-                      <s id="commodityMarketPrice">¥2499</s>
+                      <s id="commodityMarketPrice">¥{{goodsinfo.market_price}}</s>
                     </dd>
                   </dl>
                   <dl>
                     <dt>销售价</dt>
                     <dd>
-                      <em id="commoditySellPrice" class="price">¥2195</em>
+                      <em id="commoditySellPrice" class="price">¥{{goodsinfo.sell_price}}</em>
                     </dd>
                   </dl>
                 </div>
@@ -41,10 +41,22 @@
                     <dd>
                       <div class="stock-box">
                         <div class="el-input-number el-input-number--small">
-                          <span role="button" class="el-input-number__decrease is-disabled">
+                          <span
+                            role="button"
+                            class="el-input-number__decrease"
+                            ref="reduce"
+                            @click="handlerInventoryReduce($event)"
+                            :class="{'is-disabled':this.numGoods==0?true:false}"
+                          >
                             <i class="el-icon-minus"></i>
                           </span>
-                          <span role="button" class="el-input-number__increase">
+                          <span
+                            role="button"
+                            class="el-input-number__increase"
+                            ref="increase"
+                            @click="handlerInventoryIncrease($event)"
+                            :class="{'is-disabled':this.numGoods > this.allGoods - 1?true:false}"
+                          >
                             <i class="el-icon-plus"></i>
                           </span>
                           <div class="el-input el-input--small">
@@ -54,15 +66,10 @@
                               size="small"
                               type="text"
                               rows="2"
-                              max="60"
-                              min="1"
-                              validateevent="true"
+                              :max="numGoodsMax"
+                              :min="numGoodsMin"
                               class="el-input__inner"
-                              role="spinbutton"
-                              aria-valuemax="60"
-                              aria-valuemin="1"
-                              aria-valuenow="1"
-                              aria-disabled="false"
+                              v-model="numGoods"
                             />
                             <!---->
                             <!---->
@@ -72,7 +79,7 @@
                       </div>
                       <span class="stock-txt">
                         库存
-                        <em id="commodityStockNum">60</em>件
+                        <em id="commodityStockNum">{{goodsinfo.stock_quantity}}</em>件
                       </span>
                     </dd>
                   </dl>
@@ -209,20 +216,54 @@ export default {
       // 商品信息
       goodsinfo: {},
       // 推荐商品
-      hotgoodslist: []
+      hotgoodslist: [],
+      // 商品数量最大值
+      numGoodsMax: 0,
+      // 商品数量最小值
+      numGoodsMin: 0,
+      // 选购商品数量
+      numGoods: 0,
+      // 总库存
+      allGoods: 0
     };
   },
   created() {
-    this.$axios
-      .get(`site/goods/getgoodsinfo/${this.$route.params.id}`)
-      .then(res => {
-        // 商品图片
-        this.imglist = res.data.message.imglist;
-        // 商品信息
-        this.goodsinfo = res.data.message.goodsinfo;
-        // 推荐商品
-        this.hotgoodslist = res.data.message.hotgoodslist;
-      });
+    this.getData();
+  },
+  methods: {
+    // 获取数据
+    getData() {
+      this.$axios
+        .get(`site/goods/getgoodsinfo/${this.$route.params.id}`)
+        .then(res => {
+          // 商品图片
+          this.imglist = res.data.message.imglist;
+          // 商品信息
+          this.goodsinfo = res.data.message.goodsinfo;
+          // 推荐商品
+          this.hotgoodslist = res.data.message.hotgoodslist;
+          // 总库存
+          this.allGoods = this.goodsinfo.stock_quantity;
+          // 总选购
+          this.numGoods = 0;
+        });
+    },
+    // 库存操作
+    // 减
+    handlerInventoryReduce() {
+      if (this.numGoods == 0) return;
+      this.numGoods--;
+    },
+    // 增
+    handlerInventoryIncrease() {
+      if (this.numGoods > this.allGoods - 1) return;
+      this.numGoods++;
+    }
+  },
+  watch: {
+    $route: function() {
+      this.getData();
+    }
   }
 };
 </script>
