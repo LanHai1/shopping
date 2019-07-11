@@ -87,7 +87,7 @@
                     <dd>
                       <div id="buyButton" class="btn-buy">
                         <button onclick="cartAdd(this,'/',1,'/shopping.html');" class="buy">立即购买</button>
-                        <button onclick="cartAdd(this,'/',0,'/cart.html');" class="add">加入购物车</button>
+                        <button @click="goCart(goodsinfo.id)" class="add">加入购物车</button>
                       </div>
                     </dd>
                   </dl>
@@ -220,7 +220,7 @@ export default {
       // 商品数量最小值
       numGoodsMin: 0,
       // 选购商品数量
-      numGoods: 0,
+      numGoods: 1,
       // 总库存
       allGoods: 0,
       // 用户评论
@@ -322,6 +322,18 @@ export default {
         type: "warning",
         duration: 2000
       });
+    },
+    // 加入购物车
+    goCart(id) {
+      if (this.numGoods <= 0) {
+        return this.$notify({
+          title: "警告",
+          message: "请选择商品数量",
+          type: "warning",
+          duration: 2000
+        });
+      }
+      this.$emit("changeCartNum", id);
     }
   },
   watch: {

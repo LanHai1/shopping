@@ -21,10 +21,10 @@
             <a>退出</a>
             <strong>|</strong>
           </span>
-          <a href="#/cart" class>
+          <a @click="cartKong" class>
             <i class="iconfont icon-cart"></i>购物车(
             <span id="shoppingCartCount">
-              <span>4</span>
+              <span>{{cartShoppingList.length}}</span>
             </span>)
           </a>
         </div>
@@ -90,7 +90,25 @@
 
 <script>
 export default {
-  name: "myhead"
+  name: "myhead",
+  data() {
+    return {
+      cartShoppingList: []
+    };
+  },
+  methods: {
+    cartKong() {
+      if (this.cartShoppingList.length === 0) {
+        return this.$notify({
+          title: "警告",
+          message: "购物车为空点你妈的点",
+          type: "warning",
+          duration: 2000
+        });
+      }
+      this.$router.push("/cart/" + this.cartShoppingList.join());
+    }
+  }
 };
 </script>
 

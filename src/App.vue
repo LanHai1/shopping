@@ -1,7 +1,7 @@
 <template>
   <div>
-    <myhead></myhead>
-    <router-view></router-view>
+    <myhead ref="myhead"></myhead>
+    <router-view ref="contentRouterView" @changeCartNum="cartNum"></router-view>
     <myfloor></myfloor>
   </div>
 </template>
@@ -16,6 +16,12 @@ export default {
   components: {
     myhead,
     myfloor
+  },
+  methods: {
+    // 加入购物车
+    cartNum(id) {
+      this.$refs.myhead.cartShoppingList.push(id)
+    }
   }
 };
 </script>

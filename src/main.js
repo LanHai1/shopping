@@ -30,7 +30,7 @@ import cart from "./components/shoppingCart/shoppingCartC.vue";
 // 创建路由规则
 const routes = [
   {
-    path: "/cart",
+    path: "/cart/:cartList",
     component: cart
   },
   {
