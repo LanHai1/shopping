@@ -125,6 +125,7 @@
                           data-type="*10-1000"
                           nullmsg="请填写评论内容！"
                           v-model.trim="commentContent"
+                          @keyup.enter="setCommentContext"
                         ></textarea>
                         <span class="Validform_checktip"></span>
                       </div>
@@ -203,7 +204,6 @@
 </template>
 
 <script>
-import { log } from "util";
 export default {
   // 商品详情
   name: "detailsGoods",

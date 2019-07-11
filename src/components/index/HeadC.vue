@@ -21,7 +21,7 @@
             <a>退出</a>
             <strong>|</strong>
           </span>
-          <a href class>
+          <a href="#/cart" class>
             <i class="iconfont icon-cart"></i>购物车(
             <span id="shoppingCartCount">
               <span>4</span>
@@ -53,7 +53,7 @@
             </li>
             <li class="video">
               <a href="#" class>
-                <span class="out" style="top: 0px;">黑马超市</span>
+                <span class="out" style="top: 0px;">超市</span>
               </a>
             </li>
             <li class="down">
@@ -62,7 +62,7 @@
               </a>
             </li>
             <li class="goods">
-              <a href class="router-link-exact-active">
+              <a href="#/goods" class="router-link-exact-active">
                 <span class="out" style="top: 0px;">购物商城</span>
               </a>
             </li>

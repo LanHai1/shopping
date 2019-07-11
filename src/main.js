@@ -25,8 +25,14 @@ Vue.use(ElementUi);
 import goods from "./components/goods/ShoppingListC.vue";
 // 商品详情
 import details from "./components/goodsDetails/details.vue";
+// 购物车
+import cart from "./components/shoppingCart/shoppingCartC.vue";
 // 创建路由规则
 const routes = [
+  {
+    path: "/cart",
+    component: cart
+  },
   {
     path: "/details/:id",
     component: details
