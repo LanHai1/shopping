@@ -13,92 +13,21 @@
           <div class="left-220" style="margin: 0px;">
             <div class="banner-nav">
               <ul>
-                <li>
+                <li v-for="item in catelist" :key="item.id">
                   <h3>
                     <i class="iconfont icon-arrow-right"></i>
-                    <span>手机数码</span>
+                    <span>{{item.title}}</span>
                     <p>
-                      <span>手机通讯&nbsp;</span>
-                      <span>摄影摄像&nbsp;</span>
-                      <span>存储设备&nbsp;</span>
+                      <span v-for="span in item.subcates" :key="span.id">{{span.title}}&nbsp;</span>
                     </p>
                   </h3>
                   <div class="item-box">
                     <dl>
                       <dt>
-                        <a href="/goods/40.html">手机数码</a>
+                        <a href="#">{{item.title}}</a>
                       </dt>
                       <dd>
-                        <a href="/goods/43.html">手机通讯</a>
-                        <a href="/goods/43.html">摄影摄像</a>
-                        <a href="/goods/43.html">存储设备</a>
-                      </dd>
-                    </dl>
-                  </div>
-                </li>
-                <li>
-                  <h3>
-                    <i class="iconfont icon-arrow-right"></i>
-                    <span>电脑办公</span>
-                    <p>
-                      <span>电脑整机&nbsp;</span>
-                      <span>外设产品&nbsp;</span>
-                      <span>办公打印&nbsp;</span>
-                    </p>
-                  </h3>
-                  <div class="item-box">
-                    <dl>
-                      <dt>
-                        <a href="/goods/40.html">电脑办公</a>
-                      </dt>
-                      <dd>
-                        <a href="/goods/43.html">电脑整机</a>
-                        <a href="/goods/43.html">外设产品</a>
-                        <a href="/goods/43.html">办公打印</a>
-                      </dd>
-                    </dl>
-                  </div>
-                </li>
-                <li>
-                  <h3>
-                    <i class="iconfont icon-arrow-right"></i>
-                    <span>影音娱乐</span>
-                    <p>
-                      <span>平板电视&nbsp;</span>
-                      <span>音响DVD&nbsp;</span>
-                      <span>影音配件&nbsp;</span>
-                    </p>
-                  </h3>
-                  <div class="item-box">
-                    <dl>
-                      <dt>
-                        <a href="/goods/40.html">影音娱乐</a>
-                      </dt>
-                      <dd>
-                        <a href="/goods/43.html">平板电视</a>
-                        <a href="/goods/43.html">音响DVD</a>
-                        <a href="/goods/43.html">影音配件</a>
-                      </dd>
-                    </dl>
-                  </div>
-                </li>
-                <li>
-                  <h3>
-                    <i class="iconfont icon-arrow-right"></i>
-                    <span>服装类</span>
-                    <p>
-                      <span>男装&nbsp;</span>
-                      <span>女装&nbsp;</span>
-                    </p>
-                  </h3>
-                  <div class="item-box">
-                    <dl>
-                      <dt>
-                        <a href="/goods/40.html">服装类</a>
-                      </dt>
-                      <dd>
-                        <a href="/goods/43.html">男装</a>
-                        <a href="/goods/43.html">女装</a>
+                        <a href="#" v-for="span in item.subcates" :key="span.id">{{span.title}}</a>
                       </dd>
                     </dl>
                   </div>
@@ -109,91 +38,28 @@
           <!--幻灯片-->
           <div class="left-705">
             <div class="banner-img">
-              <div id="focus-box" class="focus-box">
-                <ul class="slides">
-                  <li
-                    class
-                    style="width: 100%;height:100%; float: left; margin-right: -100%; position: relative; opacity: 0; display: block; z-index: 1;"
-                  >
-                    <a href="/goods.html">
-                      <img
-                        style="width: 100%;height:100%;"
-                        src="http://39.108.135.214:8899/imgs/SJ4EgwosX0wTqvyAvhtFGT1w.jpg"
-                        draggable="false"
-                      />
-                    </a>
-                  </li>
-                  <li
-                    style="width: 100%;height:100%; float: left; margin-right: -100%; position: relative; opacity: 1; display: block; z-index: 2;"
-                    class="flex-active-slide"
-                  >
-                    <a href="/goods.html">
-                      <img
-                        style="width: 100%;height:100%;"
-                        src="http://39.108.135.214:8899/upload/201504/20/thumb_201504200314272543.jpg"
-                        draggable="false"
-                      />
-                    </a>
-                  </li>
-                </ul>
-                <ol class="flex-control-nav flex-control-paging">
-                  <li>
-                    <a class>1</a>
-                  </li>
-                  <li>
-                    <a class="flex-active">2</a>
-                  </li>
-                </ol>
+              <div id="focus-box" class="focus-box elmBanner">
+                <el-carousel :interval="3000" type="card" height="200px">
+                  <el-carousel-item v-for="item in sliderlist" :key="item.id">
+                    <h3 class="medium">
+                      <img :src="item.img_url" class="mediumImg" alt />
+                    </h3>
+                  </el-carousel-item>
+                </el-carousel>
               </div>
             </div>
           </div>
           <!--/幻灯片-->
           <div class="left-220">
             <ul class="side-img-list">
-              <li>
+              <li v-for="(item, index) in toplist" :key="index">
                 <div class="img-box">
-                  <label>1</label>
-                  <img src="http://39.108.135.214:8899/imgs/SJ4EgwosX0wTqvyAvhtFGT1w.jpg" />
+                  <label>{{index+1}}</label>
+                  <img :src="item.img_url" />
                 </div>
                 <div class="txt-box">
-                  <a href="/goods/show-98.html">骆驼男装2017秋季新款运动休闲纯色夹克青年宽松长袖针织开衫卫衣</a>
-                  <span>2017-09-26</span>
-                </div>
-              </li>
-              <li>
-                <div class="img-box">
-                  <label>2</label>
-                  <img
-                    src="http://39.108.135.214:8899/upload/201504/20/thumb_201504200314272543.jpg"
-                  />
-                </div>
-                <div class="txt-box">
-                  <a href="/goods/show-98.html">奔腾（BNTN） 380功放+纽约至尊 套装家庭影院</a>
-                  <span>2015-04-20</span>
-                </div>
-              </li>
-              <li>
-                <div class="img-box">
-                  <label>3</label>
-                  <img
-                    src="http://39.108.135.214:8899/upload/201504/20/thumb_201504200318534459.jpg"
-                  />
-                </div>
-                <div class="txt-box">
-                  <a href="/goods/show-98.html">飞利浦（PHILIPS）DVP3690 全高清DVD影碟机播放器</a>
-                  <span>2015-04-20</span>
-                </div>
-              </li>
-              <li>
-                <div class="img-box">
-                  <label>4</label>
-                  <img
-                    src="http://39.108.135.214:8899/upload/201504/20/thumb_201504200258403759.jpg"
-                  />
-                </div>
-                <div class="txt-box">
-                  <a href="/goods/show-98.html">三星（SAMSUNG）UA40HU5920JXXZ 40英寸4K超高清</a>
-                  <span>2015-04-20</span>
+                  <a href="/goods/show-98.html">{{item.title}}</a>
+                  <span>{{item.add_time | formatTime}}</span>
                 </div>
               </li>
             </ul>
@@ -649,9 +515,65 @@
 
 <script>
 export default {
-  name: "goods"
+  name: "goods",
+  data() {
+    return {
+      // 分类导航
+      catelist: [],
+      // 轮播图
+      sliderlist: [],
+      // 热门排行商品
+      toplist: []
+    };
+  },
+  created() {
+    // 请求数据
+    this.$axios.get("site/goods/gettopdata/goods").then(res => {
+      // 分类导航
+      this.catelist = res.data.message.catelist;
+      // 轮播图
+      this.sliderlist = res.data.message.sliderlist;
+      // 热门排行商品
+      this.toplist = res.data.message.toplist;
+    });
+  }
 };
 </script>
 
 <style>
+.el-carousel__item h3 {
+  color: #475669;
+  font-size: 14px;
+  opacity: 0.75;
+  line-height: 0;
+  margin: 0;
+}
+
+.banner-img h3 {
+  min-width: 100%;
+  position: absolute;
+  text-align: center;
+  color: green;
+  bottom: 0;
+  line-height: 0;
+  opacity: 1;
+}
+
+.el-carousel__item:nth-child(2n) {
+  background-color: transparent;
+  opacity: 1;
+}
+
+.el-carousel__item:nth-child(2n + 1) {
+  background-color: transparent;
+  opacity: 1;
+}
+
+.mediumImg {
+  width: 100%;
+  height: 100%;
+}
+.elmBanner {
+  margin: 55px auto;
+}
 </style>
