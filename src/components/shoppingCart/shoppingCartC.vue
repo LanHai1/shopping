@@ -80,8 +80,7 @@
                 </tr>
                 <tr v-for="(item) in cartList" :key="item.id">
                   <th width="48" align="center">
-                    <!-- cartList[index].isSelected true 无效？ -->
-                    <el-switch v-show="1" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
+                    <el-switch v-show="1" v-model="item.isSelected" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
                   </th>
                   <th align="left" class="shoppingTrTitle" colspan="2">
                     <img :src="item.img_url" alt />
@@ -140,6 +139,8 @@ export default {
         res.data.message.forEach(val => {
           val.isSelected = true;
         });
+        // 处理商品数据
+        console.log(this.$route.params.cartList)
         this.cartList = res.data.message;
       });
   },

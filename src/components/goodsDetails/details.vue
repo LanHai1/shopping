@@ -165,7 +165,7 @@
                       <el-pagination
                         @size-change="handleSizeChange"
                         @current-change="handleCurrentChange"
-                        :current-page="1"
+                        :current-page="pageIndex"
                         :page-sizes="[10, 20, 30, 40 ,50 ,100]"
                         :page-size="10"
                         layout="total, sizes, prev, pager, next, jumper"
@@ -293,6 +293,7 @@ export default {
     // 页码条数改变触发
     handleSizeChange(val) {
       this.pageSize = val;
+      this.pageIndex = 1;
       this.getComments();
     },
     // 当前页改变触发
